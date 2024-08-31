@@ -1,4 +1,7 @@
 {
+  "scripts": {
+  "start": "nodemon app.js"
+  },
   "dependencies": {
     "-": "^0.0.1",
     "@google-cloud/storage": "^7.12.1",
