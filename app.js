@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/uploads/images', express.static(path.join(__dirname, './uploads/images')));
-app.use('/uploads/document', express.static(path.join(__dirname, './uploads/docs')));
+app.use('/uploads/docs', express.static(path.join(__dirname, './uploads/docs')));
 
 app.use(router);
 
