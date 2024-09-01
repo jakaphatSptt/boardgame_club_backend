@@ -3,10 +3,7 @@ const mongoose = require('mongoose');
 //เชื่อมกับ mongoDB
 const dbURL = 'mongodb://localhost:27017/boardGameData'
 
-mongoose.connect(dbURL,{
-    useNewUrlParser:true,
-    useUnifiedTopology:true
-}).catch(err=>console.log(err))
+mongoose.connect(dbURL).catch(err=>console.log(err))
 
 //ออกแบบ
 let customerSchema = new mongoose.Schema({
