@@ -1,6 +1,13 @@
 {
+  "name": "fbg_api",
+  "version": "1.0.0",
+  "description": "backend for fbg website",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "prakoi",
+  "license": "ISC",
   "scripts": {
-  "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "-": "^0.0.1",
