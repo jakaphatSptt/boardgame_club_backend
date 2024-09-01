@@ -124,7 +124,7 @@ router.put('/api/getDate/:id', async(req,res) => {
             startMDY: mdy,
             startTime: hm,
         }
-        const startDate = await ctData.findOneAndUpdate( {_id:id}, setup )
+        const startDate = await ctData.findOneAndUpdate( {_id:id}, setup, {new: true, upsert: false}  )
         res.status(201).json({ message:`start playing`, startDate })
         console.log(`${id} start playing at ${hm} ${mdy}`)
     } catch (error) {
@@ -142,7 +142,7 @@ router.put('/api/clearDate/:id', async(req,res) => {
             startTime: "--:--",
             startMDY: "---/--/----"
         }
-        const clearDate = await ctData.findOneAndUpdate( {_id:id}, setup )
+        const clearDate = await ctData.findOneAndUpdate( {_id:id}, setup, {new: true, upsert: false}  )
         res.status(201).json({ message:`stop playing`, clearDate})
         console.log(`${id} was stop playing`)
     } catch (error) {
