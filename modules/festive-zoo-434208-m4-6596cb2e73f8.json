@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "festive-zoo-434208-m4",
+  "private_key_id": "6596cb2e73f80d592cf6f8365e267355af693067",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC31oF3iJ/tuQd9\nFgLCzKIfaEm6Uluvy7CvFGhEK8e84KqppD3Ez/H+WCtba/lcHTMSMcxisxKBBFQ8\n3nSKHGfuYQH14rbSViqn1dXY64Vi6SjWTPmO2rRCGkoHeL2g8x24p+5f0CklsDjN\no7F8/vXMK8xCp0hQHM5eSTU9bGjcVHMnJrljdfQIZHOdJo2fVReQPlZXM9sQHgWP\nakNQ8OOXp0/vTHsD6ihA40a8dGXARZ9T+pB8vhUBrLDwHkxTt3kSgslwRfSWENh4\neG8yKCFvzeKPzQIlmLinxBCmUtm/r8VdQUv3D2OJl6law0DNo8k0Ojp5z6gv++/F\nXC37pzyLAgMBAAECggEAAQZMegPPqJzZ8tzog1NA0z4L0nGkazyOXL68/XE39xgH\nOojgmfYQ+T5AnfaPa2CRsmNaBJehrOrR0X1iJeWd3lIqgLgu9zLaChGbasc8FxzF\nvVj4Ec9f8jttzpvahNRGDXTq2xxDdJBKIxxy4+Hlqc+BCKxNtskP9nInepp8DDDm\ntH+4fhQNkG2eewuIJrQzYst2z0ELWrC28vViwkZu8QXOgpUwL/OQbQiFrKJSBXdL\n/abBAEOaocE1vY7Vaplj6KpR0DZQrhU+PVbHYyQxGmt4Lz3LbLgZewB8TRVlS/pW\nYHZR3wnEX4jq/ot7Dq4D1oGeTKEFGoVNX1cW3nV1SQKBgQDk77537BXOMKGPAFxK\nxv02wjj2WphtAsgZKX8VDZfXu2ULG4j5A7BB+cq/CDIKtxKWqDflJwzHMIrosfGr\nVdLqb7B78sF7CWxzWfFlNuF7hHlyuHnDA/yvqujt1ARX0iVyLIN94G2W5tYSQI+/\nPxT2VHHm4E+p5oKGTGryOpWbwwKBgQDNkfPweN592vjnEvrFiOt9qBgUrT6CqocX\nm0I5SBk4G3i/iOvNuEC54+YBRs4G//KVuYYPxadb1H/yyX2jOVAc+ZwFgYzWR19h\no81L4JEzb4kdKBVKG9Ib4ZEbP8VodKaVv29iUS5CtHHba9PuiA4e7F3pRC7xUC2G\nn47H2fz3mQKBgQDNXFGa+WfGAdGqmUQwv7c8e5TlR/cbMjeUeqjIldzzY+ILyLNh\nzHE7fXrlSdC50+cUxej94b2QoHa6rYR/kQkVywKg7O2qFJX4E2J6zHQPfJIE2n4+\n9UChw8oWLO2IabW1aUC6las4hfDZhphrkYaYQL+7vtM3MNM87SeyCeNSSQKBgQC9\nYn5DB4eqmQaAE8s2GushC7CLtAOH68SjaeT70sFxIFYA1wqurtXqq9ulR27dogUC\nDTZF54lEn6P0r85whoeY+hjUNcLjUkO8N2UWR2Bd6559XwUmDjVmfEvrt7eNgRJL\nmV7rS/D7gTP3uwI3md6wfIAUPD2nEX+vq+Wllt1n2QKBgFTAPXmU/jKHvb8qqCoL\nfohYhuvhHiQ2eCBGKLpTwy7XJAb7W5ackxZqGAp5Femwh+dbheEHlcYyuB93+UTy\nyLvMFk2IVcmiie1gX3lnH2F83I1kKd3Vq+YYzt7+vXRFjp/4v92O2uBulvmX1bnT\nCODfaJFgy11/RPNfRgrVHcMa\n-----END PRIVATE KEY-----\n",
+  "client_email": "admin-fbgc@festive-zoo-434208-m4.iam.gserviceaccount.com",
+  "client_id": "104566473685659379733",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/admin-fbgc%40festive-zoo-434208-m4.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

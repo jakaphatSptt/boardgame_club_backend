@@ -5,7 +5,7 @@ const router = express.Router();
 const { ctData, bgData, pData, adminData } = require('../modules/fbgClubData') //mongoDB web database 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const multiUpload = require('../modules/multerConfig')
+const { multiUpload, uploadsToGCS, delFromGCS } = require('../modules/cloudUploadConfig')
 
 // **** api ของ customers ****
 // api ข้อมูลของลูกค้าทั้งหมด
@@ -78,29 +78,38 @@ router.post('/api/create/new-customer', async(req,res) => {
 
 router.post('/api/create/new-game', multiUpload, async(req,res) => {
     try {
+        if (!req.body.title) {
+            return res.status(400).json({ message: 'Game name is required' });
+        }
         const newId = `${new Date().getTime()/100|2}`
-        const tagArray = req.body.tags ? req.body.tags.split(',').map(tag => ({ tag: tag.trim() })) : [];
-        const logoUrl = req.files['logo'] ? req.files['logo'][0].filename : null
-        const boxesUrl = req.files['boxes'] ? req.files['boxes'][0].filename : null
-        const bannerUrl = req.files['banner'] ? req.files['banner'][0].filename :null
-        const docsFilesUrl = req.files['docFiles'] ? req.files['docFiles'].map(file => ({ doc: file.filename})) : []
+        const tagArray = req.body.tags ? req.body.tags.split(',').map(tag => ({ tag: tag.trim() })) : []
+        const logo = req.files?.logo?.[0]
+        const boxes = req.files?.boxes?.[0]
+        const banner = req.files?.banner?.[0]
+        const docFiles = req.files?.docFiles || []
 
-        const addGame = new bgData({
+        const newGame = new bgData({
             gid: newId,
-            title: req.body.title,
-            community: req.body.community,
-            playingTime: req.body.playingTime,
+            title: req.body.title || 'Untitled',
+            community: req.body.community || '',
+            playingTime: req.body.playingTime || 0,
             tags: tagArray,
-            price: req.body.price,
-            content: req.body.content,
-            videoLink: req.body.videoLink,
-            logo: logoUrl,
-            boxes: boxesUrl,
-            banner: bannerUrl,
-            docFiles: docsFilesUrl,
+            price: req.body.price || 0,
+            content: req.body.content || '',
+            videoLink: req.body.videoLink || '',
+            logo: logo? await uploadsToGCS(logo, 'images') : '',
+            boxes: boxes? await uploadsToGCS(boxes, 'images') : '',
+            banner: banner? await uploadsToGCS(banner, 'images') : '',
+            docFiles: docFiles.length > 0? await Promise.all(
+               docFiles.map( async(doc) => {
+                const url = await uploadsToGCS(doc, 'docs')
+                return { doc: url }
+               }) 
+            ) : [],
         })
-        await addGame.save()
+        const addGame = await newGame.save()
         res.status(201).json({ message:`${newId} created success`, addGame})
+        console.log(newGame)
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'error na bro try again'})
@@ -172,29 +181,50 @@ router.patch('/api/game/:id/update', multiUpload, async(req,res)=>{
         const id = req.params.id
         const game = await bgData.findOne({ gid:id })
 
-        const tagArray = req.body.tags ? req.body.tags.split(',').map(tag => ({ tag: tag.trim() })) : undefined ;
+        const tagArray = req.body.tags ? req.body.tags.split(',').map(tag => ({ tag: tag.trim() })) : []
+        const logo = req.files?.logo?.[0]
+        const boxes = req.files?.boxes?.[0]
+        const banner = req.files?.banner?.[0]
+        const docFiles = req.files?.docFiles || []
+
         const update = {
-            title: req.body.title,
-            community: req.body.community,
-            playingTime: req.body.playingTime,
+            title: req.body.title || game.title,
+            community: req.body.community || game.community,
+            playingTime: req.body.playingTime || game.playingTime,
             tags: tagArray,
-            price: req.body.price,
-            content: req.body.content,
-            videoLink: req.body.videoLink,
-            logo: req.files['logo'] ? req.files['logo'][0].filename : undefined,
-            boxes: req.files['boxes'] ? req.files['boxes'][0].filename : undefined,
-            banner: req.files['banner'] ? req.files['banner'][0].filename : undefined,
-            docFiles: req.files['docFiles'] ? req.files['docFiles'].map(file => ({ doc: file.filename})) : undefined,
-        }
-        const delImg = ['logo','boxes','banner']
-        delImg.forEach(fk=>{
-            if( game[fk] && update[fk] && game[fk] !== update[fk] ){
-                const filePath = path.join(__dirname, '../uploads/images/',game[fk]);
-                fs.unlink(filePath, (err)=>{
-                    console.error(`Failed to delete file: ${filePath}`, err)
+            price: req.body.price || game.price,
+            content: req.body.content || game.content,
+            videoLink: req.body.videoLink || game.videoLink,
+            logo: logo? await uploadsToGCS(logo, 'images') : game.logo,
+            boxes: boxes? await uploadsToGCS(boxes, 'images') : game.boxes,
+            banner: banner? await uploadsToGCS(banner, 'images') : game.banner,
+            docFiles: docFiles? await Promise.all(
+                docFiles.map( async(doc) => {
+                    const url = await uploadsToGCS( doc, 'docs')
+                    return { doc: url }
                 })
+            ) : game.docFiles,
+        }
+
+        if(logo){
+            const oldFile = game.logo? game.logo.split(`/`).pop() : null;
+            await delFromGCS(oldFile, 'images')
+        }
+        if(boxes){
+            const oldFile = game.boxes? game.boxes.split(`/`).pop() : null;
+            await delFromGCS(oldFile, 'images')
+        }
+        if(banner){
+            const oldFile = game.banner? game.banner.split(`/`).pop() : null;
+            await delFromGCS(oldFile, 'images')
+        }
+        for(const doc of game.docFiles){
+            if(doc){
+                const oldFile = doc.doc? doc.doc.split(`/`).pop() : null;
+                await delFromGCS(oldFile, 'docs')
             }
-        })
+        }
+
         const updateGame = await bgData.findOneAndUpdate( {gid:id },update, {new: true, upsert: false} )
         if(!updateGame){
             res.status(404).json({ message:'game not found' })
