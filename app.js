@@ -1,12 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
-//const router = require('./routes/localhost_Router');
-const router = require('./routes/fbgClub_Router');
+const { port } = require('./src/config/server.config')
+
+const router = require('./src/routes/Router');
 
 const app = express();
-const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

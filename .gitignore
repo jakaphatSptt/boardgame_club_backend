@@ -3,4 +3,5 @@ node_modules
 modules/localhostData.js
 modules/local_file_config.js
 routes/localhost_Router.js
-uploads
+
+.env
