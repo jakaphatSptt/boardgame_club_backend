@@ -1,6 +1,4 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const router = express.Router();
 
 const { getCustomers, getCustomer, createCustomer, getDate, clearDate, deleteCustomer, deleteLastCustomer } = require('../controllers/customer.controller')

@@ -6,7 +6,8 @@ const session = require('express-session');
 const { port } = require('./src/config/server.config')
 
 const customerRouter = require('./src/routes/customer.router');
-const boardGameRouter = require('./src/routes/boardGame.router')
+const boardGameRouter = require('./src/routes/boardGame.router');
+const priceRouter = require('./src/routes/price.router');
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.use('/uploads/images', express.static(path.join(__dirname, './uploads/images
 app.use('/uploads/docs', express.static(path.join(__dirname, './uploads/docs')));
 
 app.use(customerRouter);
-app.use(boardGameRouter)
+app.use(boardGameRouter);
+app.use(priceRouter);
 
 app.listen(port,()=> {
     console.log(`**** listening on ${port} ****`)
