@@ -1,7 +1,7 @@
 const bgData = require('../models/boardGame.model');
 const { cloudUpload, cloudDelete } = require('../services/googleCloud.service')
 
-exports.getBoardGames = async(req, res) => {
+exports.list = async(req, res) => {
     try {
         const boardgames = await bgData.find({});
         res.status(200).json({ message:' get boardgames data succuss', boardgames })
@@ -10,7 +10,7 @@ exports.getBoardGames = async(req, res) => {
     }
 };
 
-exports.getBoardGame = async(req, res) => {
+exports.game = async(req, res) => {
     try {
         const id = req.params.id;
         const boardGame = await bgData.findOne({gid: id});
@@ -23,7 +23,7 @@ exports.getBoardGame = async(req, res) => {
     }
 };
 
-exports.createBoardGame = async(req, res) => {
+exports.create = async(req, res) => {
     try {
         if (!req.body.title) {
             return res.status(400).json({ message: 'Game name is required' });
@@ -62,7 +62,7 @@ exports.createBoardGame = async(req, res) => {
     }
 };
 
-exports.editBoardGame = async(req, res) => {
+exports.edit = async(req, res) => {
     try {
         const id = req.params.id
         const game = await bgData.findOne({ gid:id })
@@ -123,7 +123,7 @@ exports.editBoardGame = async(req, res) => {
     }
 };
 
-exports.deleteBoardGame = async(req, res) => {
+exports.delete = async(req, res) => {
     try {
         const id = req.params.id
         const game = await bgData.findOne({ gid:id })

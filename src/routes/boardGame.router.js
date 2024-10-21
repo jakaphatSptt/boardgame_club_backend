@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const { upload, multiUpload } = require('../middlewares/multer')
-const { getBoardGames, getBoardGame, createBoardGame, editBoardGame, deleteBoardGame } = require('../controllers/boardGame.controller')
+const gameController = require('../controllers/boardGame.controller')
 
-router.get('/boardgames', getBoardGames);
-router.get('/boardgame/:id', getBoardGame);
-router.post('/boardgame/create', multiUpload, createBoardGame);
-router.put('/boardgame/edit/:id', multiUpload, editBoardGame);
-router.delete('/boardame/delete/:id', deleteBoardGame);
+router.get('/boardgames', gameController.list);
+router.get('/boardgame/:id', gameController.game);
+router.post('/boardgame/create', multiUpload, gameController.create);
+router.put('/boardgame/edit/:id', multiUpload, gameController.edit);
+router.delete('/boardgame/delete/:id', gameController.delete);
 
 module.exports = router;

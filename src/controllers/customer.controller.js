@@ -1,6 +1,6 @@
 const cData = require('../models/customer.model');
 
-exports.getCustomers = async(req, res) => {
+exports.list = async(req, res) => {
     try {
         const customers = await cData.find({});
         res.status(200).json({ message:'found customers', customers });
@@ -9,7 +9,7 @@ exports.getCustomers = async(req, res) => {
     }
 };
 
-exports.getCustomer = async(req, res) => {
+exports.personal = async(req, res) => {
     try {
         const id = req.params.id;
         const customer = await cData.findOne({ cid: id });
@@ -25,7 +25,7 @@ exports.getCustomer = async(req, res) => {
     }
 }
 
-exports.createCustomer = async(req, res) => {
+exports.create = async(req, res) => {
     try {
         const count = await cData.find({}).sort({ cid: 1 });
         const id = await cData.countDocuments()+1;
@@ -57,7 +57,7 @@ exports.createCustomer = async(req, res) => {
     }
 };
 
-exports.getDate = async(req, res) => {
+exports.start = async(req, res) => {
     try {
         const id = req.params.id
         const getDate = new Date()
@@ -82,7 +82,7 @@ exports.getDate = async(req, res) => {
     }
 };
 
-exports.clearDate = async(req, res) => {
+exports.clear = async(req, res) => {
     try {
         const id = req.params.id
         const setup = {
@@ -100,7 +100,7 @@ exports.clearDate = async(req, res) => {
     }
 };
 
-exports.deleteCustomer = async(req, res) => {
+exports.delete = async(req, res) => {
     try {
         const id = req.params.id;
         const findId = await cData.findOne({ cid:id });
@@ -114,7 +114,7 @@ exports.deleteCustomer = async(req, res) => {
     }
 };
 
-exports.deleteLastCustomer = async(req, res) => {
+exports.deleteLastId = async(req, res) => {
     try {
         const doc = await cData.find({})  
         const lastId = doc[doc.length-1]  //ค้นหา array ตัวสุดท้ายใน collection customers

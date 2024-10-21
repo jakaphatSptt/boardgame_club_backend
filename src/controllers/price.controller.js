@@ -1,6 +1,6 @@
 const pData = require('../models/price.model')
 
-exports.getPrice = async(req, res) => {
+exports.present = async(req, res) => {
     try {
         const price = await pData.find({});
         if(price === null){
@@ -14,7 +14,7 @@ exports.getPrice = async(req, res) => {
     }
 };
 
-exports.updatePrice = async(req, res) => {
+exports.update = async(req, res) => {
     try {
         const id = '66bba6ef85f2c67ba7fb46f8'
         const updatePrice = {
